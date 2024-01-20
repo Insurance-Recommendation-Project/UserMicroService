@@ -75,7 +75,7 @@
             </plugin>
 
         </plugins>
-        <finalName>userMicroservice</finalName>
+        <finalName>usermicroservice</finalName>
     </build>
 
 </project>

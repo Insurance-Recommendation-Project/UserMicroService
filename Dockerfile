@@ -1,4 +1,4 @@
 FROM openjdk:21
-ADD target/userMicroservice.jar userMicroservice.jar
+ADD target/userMicroservice.jar usermicroservice.jar
 EXPOSE 80
-ENTRYPOINT ["java", "-jar", "userMicroservice.jar"]
+ENTRYPOINT ["java", "-jar", "usermicroservice.jar"]
