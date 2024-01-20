@@ -1,4 +1,4 @@
-FROM lolhens/baseimage-openjre
-ADD target/UserMicroservice.jar UserMicroservice.jar
+FROM openjdk:21
+ADD target/userMicroservice.jar userMicroservice.jar
 EXPOSE 80
-ENTRYPOINT ["java", "-jar", "UserMicroservice.jar"]
+ENTRYPOINT ["java", "-jar", "userMicroservice.jar"]
