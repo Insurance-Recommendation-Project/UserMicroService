@@ -13,7 +13,7 @@ spec:
         app: user-microservice-k8s-mysql
     spec:
       containers:
-        - name: user-microservice-k8s
+        - name: user-microservice
           image: elmachkouriimane/usermicroservice:latest  # Utilisez l'URL complète de votre image Docker Hub
           ports:
             - containerPort: 8080
@@ -38,15 +38,34 @@ spec:
                 secretKeyRef:
                   name: mysql-secrets
                   key: password
+            - name: MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED
+              value: "true"
+            - name: MANAGEMENT_HEALTH_READINESSTATE_ENABLED
+              value: "true"
+            - name: MANAGEMENT_HEALTH_LIVENESSSTATE_ENABLED
+              value: "true"
+#            - name: SFG_BREWERY_BEER-SERVICE-HOST
+#              value: http://user-service:8080
+            - name: SERVER_SHUTDOWN
+              value: "graceful"
+          lifecycle:
+            preStop:
+              exec:
+               command: ["sh", "-c", "sleep 10"]
 ---
 apiVersion: v1 # Kubernetes API version
 kind: Service # Kubernetes resource kind we are creating
 metadata: # Metadata of the resource kind we are creating
+  labels:
+    app: beer-service
   name: user-microservice-svc
 spec:
   selector:
     app: user-microservice-k8s-mysql
+    type: ClusterIP
   ports:
-    - protocol: "TCP"
+    - protocol: TCP
       port: 8080 # The port that the service is running on in the cluster
       targetPort: 8080 # The port exposed by the ser
+status:
+  loadBalancer: {}
